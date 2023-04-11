@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
@@ -7,12 +6,15 @@ import {
   getAllDataPrefetchQuery,
   useGetAllDataQuery,
 } from "@/restAPI/data/getAllData";
+import { MenuBar } from "@/features/layout/menuBars/MenuBar";
+import { HomeMenuBarNavigation } from "@/features/layout/menuBars/homePage/HomeMenuBarNavigation";
+import { ChartCard } from "@/features/charts/ChartCard";
+import { HomepageCovidIncidenceCharts } from "@/features/charts/homepage/HomepageCovidIncidenceCharts";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { data, error, isFetching } = useGetAllDataQuery(true);
-  console.log(data, isFetching);
   return (
     <>
       <Head>
@@ -21,9 +23,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </main>
+      <MenuBar
+        navigationComponent={<HomeMenuBarNavigation />}
+        pageTitle={"Page Title"}
+      />
+      <HomepageCovidIncidenceCharts />
     </>
   );
 }
