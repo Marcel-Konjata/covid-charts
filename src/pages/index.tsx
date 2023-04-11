@@ -1,20 +1,14 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
-import {
-  getAllDataPrefetchQuery,
-  useGetAllDataQuery,
-} from "@/restAPI/data/getAllData";
 import { MenuBar } from "@/features/layout/menuBars/MenuBar";
 import { HomeMenuBarNavigation } from "@/features/layout/menuBars/homePage/HomeMenuBarNavigation";
-import { ChartCard } from "@/features/charts/ChartCard";
 import { HomepageCovidIncidenceCharts } from "@/features/charts/homepage/HomepageCovidIncidenceCharts";
+import { getAllNationDataPrefetchQuery } from "@/restAPI/data/getAllNationData";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { data, error, isFetching } = useGetAllDataQuery(true);
   return (
     <>
       <Head>
@@ -34,6 +28,6 @@ export default function Home() {
 
 export const getServerSideProps = async () => {
   const queryClient = new QueryClient();
-  await getAllDataPrefetchQuery(queryClient);
+  await getAllNationDataPrefetchQuery(queryClient, "united kingdom");
   return { props: { dehydratedState: dehydrate(queryClient) } };
 };

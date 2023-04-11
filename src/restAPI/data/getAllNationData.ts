@@ -1,12 +1,6 @@
 import { dataQueryKeys, Nation } from "@/restAPI/data/types";
 import { apiInstance } from "@/restAPI/config";
-import {
-  FetchQueryOptions,
-  QueryClient,
-  QueryOptions,
-  useQuery,
-} from "@tanstack/react-query";
-import { getAllData } from "@/restAPI/data/getAllData";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 const structure = JSON.stringify({
   date: "date",
@@ -18,8 +12,11 @@ const structure = JSON.stringify({
   cumulativeDeaths: "cumDeaths28DaysByPublishDate",
 });
 
-export const getNationData = async (nation: Nation) => {
-  const filters = [`areaType=nation`, `areaName=${nation}`];
+export const getAllNationData = async (nation: Nation) => {
+  const filters = [
+    `areaType=${nation === "united kingdom" ? "overview" : "nation"}`,
+    `areaName=${nation}`,
+  ];
   const apiParams = {
     filters: filters.join(";"),
     structure,
@@ -31,17 +28,23 @@ export const getNationData = async (nation: Nation) => {
   return response.data;
 };
 
-export const getNationDataPrefetchQuery = async (queryClient: QueryClient) => {
+export const getAllNationDataPrefetchQuery = async (
+  queryClient: QueryClient,
+  nation: Nation
+) => {
   await queryClient.prefetchQuery({
-    queryKey: dataQueryKeys.getAllData,
-    queryFn: getAllData,
+    queryKey: dataQueryKeys.getNationData,
+    queryFn: () => getAllNationData(nation),
   });
 };
 
-export const useGetNationDataQuery = (enabled: boolean = true) => {
+export const useGetAllNationDataQuery = (
+  nation: Nation,
+  enabled: boolean = true
+) => {
   return useQuery({
-    queryKey: dataQueryKeys.getAllData,
-    queryFn: getAllData,
+    queryKey: dataQueryKeys.getNationData,
+    queryFn: () => getAllNationData(nation),
     refetchOnWindowFocus: false,
     enabled,
   });

@@ -52,7 +52,6 @@ export interface Structure {
 }
 
 export const dataQueryKeys = {
-  getAllData: ["getAllData"],
   getNationData: ["getNationData"],
 };
 

@@ -7,17 +7,19 @@ interface ChartCardProps extends PropsWithChildren {
   numberOfMessages: number;
   onMessageClick?: () => void;
   avatarImageSrc?: string;
+  chartTitle: string;
 }
 export const ChartCard: FC<ChartCardProps> = ({
   children,
   numberOfMessages,
   onMessageClick,
   avatarImageSrc,
+  chartTitle,
 }) => {
   //note: in ideal scenario you want separate functionality of chat bubble
   return (
     <Card
-      title={"Chart Title"}
+      title={chartTitle}
       actions={[
         <BottomContent>
           <Avatar
