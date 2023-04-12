@@ -1,21 +1,11 @@
-export interface Datum {
+export interface IGetAllData {
   date: Date;
-  areaName: AreaName;
-  areaCode: AreaCode;
-  confirmedRate: number | null;
-  latestBy: number;
-  confirmed: number;
-  deathNew: number | null;
-  death: number | null;
-  deathRate: number | null;
-}
-
-export enum AreaCode {
-  K02000001 = "K02000001",
-}
-
-export enum AreaName {
-  UnitedKingdom = "United Kingdom",
+  name: Nation;
+  code: string;
+  dailyCases: number;
+  cumulativeCases: number;
+  dailyDeaths: number | null;
+  cumulativeDeaths: number | null;
 }
 
 export interface Pagination {
@@ -27,8 +17,8 @@ export interface Pagination {
 }
 
 export interface RequestPayload {
-  structure: Structure;
-  filters: Filter[];
+  structure: GetLatestStructure;
+  filters: GetLatestFilter[];
   page: number;
 }
 
@@ -53,6 +43,7 @@ export interface Structure {
 
 export const dataQueryKeys = {
   getNationData: ["getNationData"],
+  getLatestByDateNationData: ["getLatestNationData"],
 };
 
 /**
@@ -66,3 +57,35 @@ export type Nation =
   | "scotland"
   | "whales"
   | "united kingdom";
+
+export interface GetLatestData {
+  date: Date;
+  name: string;
+  code: string;
+  newCases: number;
+  cumulativeCases: number;
+  newDeaths: null;
+  cumulativeDeaths: null;
+}
+
+export interface GetLatestRequestPayload {
+  structure: GetLatestStructure;
+  filters: GetLatestFilter[];
+  latestBy: string;
+}
+
+export interface GetLatestFilter {
+  identifier: string;
+  operator: string;
+  value: string;
+}
+
+export interface GetLatestStructure {
+  date: string;
+  name: string;
+  code: string;
+  newCases: string;
+  cumulativeCases: string;
+  newDeaths: string;
+  cumulativeDeaths: string;
+}

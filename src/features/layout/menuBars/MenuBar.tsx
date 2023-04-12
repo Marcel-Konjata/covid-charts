@@ -26,11 +26,18 @@ export const MenuBar: FC<MenuBarProps> = ({
 };
 
 const StyledContentWrapper = styled(ContentWrapper)`
-  padding: 28px 60px;
   display: flex;
+  padding: 28px 5px;
   justify-content: space-between;
   align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  flex-wrap: wrap;
 
+  @media (min-width: 650px) {
+    padding: 28px 60px;
+    flex-direction: row;
+  }
   @media (min-width: 1450px) {
     padding: 28px 20px;
   }

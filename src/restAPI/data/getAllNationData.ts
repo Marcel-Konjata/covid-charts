@@ -1,6 +1,22 @@
-import { dataQueryKeys, Nation } from "@/restAPI/data/types";
+import {
+  dataQueryKeys,
+  IGetAllData,
+  Nation,
+  RequestPayload,
+  Pagination,
+} from "@/restAPI/data/types";
 import { apiInstance } from "@/restAPI/config";
 import { QueryClient, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+
+export interface GetAllNationDataResponse {
+  length: number;
+  maxPageLimit: number;
+  totalRecords: number;
+  data: IGetAllData[];
+  requestPayload: RequestPayload;
+  pagination: Pagination;
+}
 
 const structure = JSON.stringify({
   date: "date",
@@ -11,7 +27,6 @@ const structure = JSON.stringify({
   dailyDeaths: "newDeaths28DaysByPublishDate",
   cumulativeDeaths: "cumDeaths28DaysByPublishDate",
 });
-
 export const getAllNationData = async (nation: Nation) => {
   const filters = [
     `areaType=${nation === "united kingdom" ? "overview" : "nation"}`,
@@ -21,11 +36,15 @@ export const getAllNationData = async (nation: Nation) => {
     filters: filters.join(";"),
     structure,
   };
-  const response = await apiInstance.get("/data", {
-    params: apiParams,
-  });
+  try {
+    const response = await apiInstance.get<GetAllNationDataResponse>("/data", {
+      params: apiParams,
+    });
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    throw new Error((e as AxiosError).message);
+  }
 };
 
 export const getAllNationDataPrefetchQuery = async (

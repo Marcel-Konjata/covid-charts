@@ -28,6 +28,8 @@ const StyledLayout = styled(Layout)`
 
 const StyledContent = styled(Layout.Content)`
   background-color: #f3eeee;
+
+  max-width: 100vw;
 `;
 
 export const MainLayout: FC<PropsWithChildren> = ({ children }) => {
