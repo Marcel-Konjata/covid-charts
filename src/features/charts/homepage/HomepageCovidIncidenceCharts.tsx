@@ -7,7 +7,7 @@ import { LatestIncidenceAndMortalityChart } from "@/features/charts/homepage/lat
 
 export const HomepageCovidIncidenceCharts = () => {
   const { data } = useGetLatestNationDataQuery("england");
-  console.log(data, "latest");
+
   return (
     <Wrapper>
       <Row gutter={20}>

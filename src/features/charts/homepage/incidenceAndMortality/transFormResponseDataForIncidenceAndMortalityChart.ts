@@ -7,7 +7,6 @@ import { GetAllNationDataResponse } from "@/restAPI/data/getAllNationData";
 export function transFormResponseDataForIncidenceAndMortalityChart2020(
   data?: GetAllNationDataResponse
 ) {
-  console.log(data);
   if (data == null) return [];
   //note for smaller number of data is fine to use flat-map, however there is around 1k+ data coming from api - that means that for loop in this case is more performant algorithm
   const { data: dataToProcess } = data;
