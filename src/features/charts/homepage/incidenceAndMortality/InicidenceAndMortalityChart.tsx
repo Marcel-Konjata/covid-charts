@@ -3,6 +3,8 @@ import { useGetAllNationDataQuery } from "@/restAPI/data/getAllNationData";
 import Dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { transFormResponseDataForIncidenceAndMortalityChart2020 } from "@/features/charts/homepage/incidenceAndMortality/transFormResponseDataForIncidenceAndMortalityChart";
+import { ErrorComponent } from "@/features/charts/homepage/ErrorComponent";
+import { DynamicAreaChart } from "@/features/charts/homepage/incidenceAndMortality/DynamicAreaChart";
 
 const Area = Dynamic(
   () => import("@ant-design/charts").then(({ Area }) => Area),
@@ -11,30 +13,23 @@ const Area = Dynamic(
   }
 );
 export const IncidenceAndMortalityChart = () => {
-  const { data, error } = useGetAllNationDataQuery("england");
+  const { data, error, refetch } = useGetAllNationDataQuery("england");
 
   const chartData = useMemo(
     () => transFormResponseDataForIncidenceAndMortalityChart2020(data),
     [data]
   );
-  console.log(chartData);
 
-  const config = {
-    data: chartData,
-    xField: "date",
-    yField: "numberOfCases",
-    seriesField: "type",
-    isGrouped: true,
-    xAxis: {
-      tickCount: 5,
-      range: [1, 0],
-    },
-  };
   return (
     <ChartCard numberOfMessages={4} chartTitle={"Chart 1"}>
-      <>
-        <Area {...config} />
-      </>
+      {error ? (
+        <ErrorComponent
+          errorText={`we couldn't get data for chart`}
+          retry={refetch}
+        />
+      ) : (
+        <DynamicAreaChart data={chartData} />
+      )}
     </ChartCard>
   );
 };
