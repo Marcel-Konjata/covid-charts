@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { transFormResponseDataForIncidenceAndMortalityChart2020 } from "@/features/charts/homepage/incidenceAndMortality/transFormResponseDataForIncidenceAndMortalityChart";
 import { ErrorComponent } from "@/features/charts/homepage/ErrorComponent";
 import { DynamicAreaChart } from "@/features/charts/homepage/incidenceAndMortality/DynamicAreaChart";
+import { dummyClick } from "@/features/dummyClick";
 
 const Area = Dynamic(
   () => import("@ant-design/charts").then(({ Area }) => Area),
@@ -21,7 +22,11 @@ export const IncidenceAndMortalityChart = () => {
   );
 
   return (
-    <ChartCard numberOfMessages={4} chartTitle={"Chart 1"}>
+    <ChartCard
+      numberOfMessages={4}
+      chartTitle={"Chart 1"}
+      onMessageClick={dummyClick}
+    >
       {error ? (
         <ErrorComponent
           errorText={`we couldn't get data for chart`}

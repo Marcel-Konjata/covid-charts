@@ -5,6 +5,7 @@ import {
   DownloadOutlined,
   FunnelPlotFilled,
 } from "@ant-design/icons";
+import { dummyClick } from "@/features/dummyClick";
 
 /**
  * @description displays Home navigation Buttons
@@ -16,18 +17,18 @@ export const HomeMenuBarNavigation = () => {
 
   return (
     <StyledNav>
-      <StyledAntdButton>
+      <StyledAntdButton onClick={dummyClick}>
         Export to pdf
         <DownloadOutlined />
       </StyledAntdButton>
-      <StyledAntdButton>
+      <StyledAntdButton onClick={dummyClick}>
         <NotesText>
           <span>Notes</span>
           <NotesCount>({mockNumOfNotes})</NotesCount>
         </NotesText>
         <AlignLeftOutlined />
       </StyledAntdButton>
-      <StyledAntdButton>
+      <StyledAntdButton onClick={dummyClick}>
         Filters
         <CircleBadge>9+</CircleBadge>
         <FunnelPlotFilled />

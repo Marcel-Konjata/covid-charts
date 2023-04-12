@@ -5,6 +5,7 @@ import { transformResponseDataFromLatestIncidenceAndMortalityChart } from "@/fea
 import { useGetLatestNationDataQuery } from "@/restAPI/data/getLatestNationData";
 import { ErrorComponent } from "@/features/charts/homepage/ErrorComponent";
 import { DynamicPieChart } from "@/features/charts/homepage/latestKnownDataChart/DynamicPieChart";
+import { dummyClick } from "@/features/dummyClick";
 
 const Pie = Dynamic(() => import("@ant-design/charts").then(({ Pie }) => Pie), {
   ssr: false,
@@ -18,7 +19,11 @@ export const LatestIncidenceAndMortalityChart = () => {
   );
 
   return (
-    <ChartCard numberOfMessages={2} chartTitle={"Latest incidence / mortality"}>
+    <ChartCard
+      numberOfMessages={2}
+      chartTitle={"Latest incidence / mortality"}
+      onMessageClick={dummyClick}
+    >
       {error ? (
         <ErrorComponent
           errorText={`we couldn't get data for chart`}
