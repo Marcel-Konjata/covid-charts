@@ -1,5 +1,5 @@
 import { Avatar, Button, Card } from "antd";
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useId } from "react";
 import styled from "@emotion/styled";
 import { MessageOutlined } from "@ant-design/icons";
 
@@ -16,12 +16,13 @@ export const ChartCard: FC<ChartCardProps> = ({
   avatarImageSrc,
   chartTitle,
 }) => {
+  const id = useId();
   //note: in ideal scenario you want separate functionality of chat bubble
   return (
     <Card
       title={chartTitle}
       actions={[
-        <BottomContent>
+        <BottomContent key={id}>
           <Avatar
             src={avatarImageSrc ?? "https://i.pravatar.cc/150?img=3"}
           ></Avatar>
